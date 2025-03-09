@@ -8,6 +8,7 @@ namespace CameraScripts
     public float RotationAngleX;
     public float Distance;
     public float OffsetY;
+    public float RotationAngleY;
 
     [SerializeField] private Transform _following;
 
@@ -16,7 +17,7 @@ namespace CameraScripts
       if (_following == null)
         return;
 
-      Quaternion rotation = Quaternion.Euler(RotationAngleX, 0, 0);
+      Quaternion rotation = Quaternion.Euler(RotationAngleX, RotationAngleY, 0);
 
       Vector3 position = rotation * new Vector3(0, 0, -Distance) + FollowingPositionPoint();
 
@@ -29,7 +30,7 @@ namespace CameraScripts
     private Vector3 FollowingPositionPoint()
     {
       Vector3 followingPosition = _following.position;
-      followingPosition.y = OffsetY;
+      followingPosition.y += OffsetY;
 
       return followingPosition;
     }
