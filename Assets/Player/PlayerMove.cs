@@ -1,4 +1,5 @@
 using System;
+using CameraScripts;
 using Infrastructure;
 using Services.Input;
 using UnityEngine;
@@ -8,9 +9,10 @@ namespace Player
   public class PlayerMove : MonoBehaviour
   {
     public CharacterController CharacterController;
+    public float MovementSpeed;
+
     private IInputService _inputService;
     private Camera _camera;
-    public float MovementSpeed;
 
     private void Awake()
     {
@@ -20,6 +22,8 @@ namespace Player
     private void Start()
     {
       _camera = Camera.main;
+
+      CameraFollow();
     }
 
     private void Update()
@@ -39,5 +43,8 @@ namespace Player
       
       CharacterController.Move(MovementSpeed * movementVector * Time.deltaTime);
     }
+    
+    private void CameraFollow() => 
+      _camera.GetComponent<FollowCamera>().Follow(gameObject);
   }
 }

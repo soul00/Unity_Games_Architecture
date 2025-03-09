@@ -649,7 +649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterController: {fileID: 1171132808}
-  MovementSpeed: 9
+  MovementSpeed: 4
 --- !u!1 &1575503003
 GameObject:
   m_ObjectHideFlags: 0
