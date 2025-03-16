@@ -16,13 +16,13 @@ namespace Player
 
     private void Awake()
     {
-      _inputService = Game.InputService;
+      
     }
 
     private void Start()
     {
       _camera = Camera.main;
-
+      _inputService = Game.inputService;
       CameraFollow();
     }
 
@@ -30,13 +30,16 @@ namespace Player
     {
       Vector3 movementVector = Vector3.zero;
 
-      if (_inputService.Axis.sqrMagnitude > Constants.Epsilon)
+      if (_inputService != null)
       {
-        movementVector = _camera.transform.TransformDirection(_inputService.Axis);
-        movementVector.y = 0;
-        movementVector.Normalize();
+        if (_inputService.Axis.sqrMagnitude > Constants.Epsilon)
+        {
+          movementVector = _camera.transform.TransformDirection(_inputService.Axis);
+          movementVector.y = 0;
+          movementVector.Normalize();
 
-        transform.forward = movementVector;
+          transform.forward = movementVector;
+        }
       }
 
       movementVector += Physics.gravity;

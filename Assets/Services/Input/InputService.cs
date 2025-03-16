@@ -13,6 +13,6 @@ namespace Services.Input
         public bool IsAttackButtonUp() => SimpleInput.GetButtonUp(Button);
 
         protected static Vector2 SimpleInputAxis() =>
-            new Vector2(SimpleInput.GetAxis(Horizontal), SimpleInput.GetAxis(Vertical));
+            new(SimpleInput.GetAxis(Horizontal), SimpleInput.GetAxis(Vertical));
     }
 }

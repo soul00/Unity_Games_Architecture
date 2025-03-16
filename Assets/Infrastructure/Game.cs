@@ -5,12 +5,12 @@ namespace Infrastructure
 {
   public class Game
   {
-    public static IInputService InputService;
+    public static IInputService inputService;
     public GameStateMachine stateMachine;
 
-    public Game()
+    public Game(ICoroutineRunner coroutineRunner)
     {
-      stateMachine = new GameStateMachine();
+      stateMachine = new GameStateMachine(new SceneLoader(coroutineRunner));
     }
   }
 }

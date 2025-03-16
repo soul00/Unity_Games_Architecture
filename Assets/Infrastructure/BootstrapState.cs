@@ -5,21 +5,30 @@ namespace Infrastructure
 {
   public class BootstrapState : IState
   {
-    private readonly GameStateMachine stateMachine;
+    private string Initial = "Initial";
+    private readonly GameStateMachine _stateMachine;
+    private readonly SceneLoader _sceneLoader;
 
-    public BootstrapState(GameStateMachine stateMachine)
+    public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader)
     {
-      this.stateMachine = stateMachine;
+      _stateMachine = stateMachine;
+      _sceneLoader = sceneLoader;
     }
 
     public void Enter()
     {
       RegisterServices();
+      _sceneLoader.Load(Initial, onLoaded: EnterLoadLevel);
+    }
+
+    private void EnterLoadLevel()
+    {
+      _stateMachine.Enter<LoadLevelState>();
     }
 
     private void RegisterServices()
     {
-      Game.InputService = RegisterInputService();
+      Game.inputService = RegisterInputService();
     }
 
     public void Exit()
