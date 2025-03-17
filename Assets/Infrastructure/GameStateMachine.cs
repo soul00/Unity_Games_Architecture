@@ -13,7 +13,7 @@ namespace Infrastructure
       _states = new()
       {
         [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader),
-        [typeof(BootstrapState)] = new LoadLevelState(this, sceneLoader),
+        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader),
       };
     }
     
@@ -22,7 +22,7 @@ namespace Infrastructure
       _activeState?.Exit();
       IState state = _states[typeof(TState)];
       _activeState = state;
-      state.Enter();
+       state.Enter();
     }
     
   }
