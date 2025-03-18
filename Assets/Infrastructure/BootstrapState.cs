@@ -17,8 +17,8 @@ namespace Infrastructure
 
     public void Enter()
     {
-      RegisterServices();
-      _sceneLoader.Load(Initial, onLoaded: EnterLoadLevel);
+      RegisterServices();      
+      _sceneLoader.Load(Initial, onLoaded: EnterLoadLevel);   
     }
 
     private void EnterLoadLevel()
