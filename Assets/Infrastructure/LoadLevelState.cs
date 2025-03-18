@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure
 {
-  public class LoadLevelState : IState
+  public class LoadLevelState : IPayloadedState<string>
   {
     private readonly GameStateMachine _stateMachine;
     private readonly SceneLoader _sceneLoader;
@@ -11,9 +11,9 @@
       _sceneLoader = sceneLoader;
     }
 
-    public void Enter()
+    public void Enter(string payload)
     {
-      _sceneLoader.Load("Main");
+      _sceneLoader.Load(payload);
     }
 
     public void Exit()

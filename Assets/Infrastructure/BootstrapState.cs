@@ -17,13 +17,13 @@ namespace Infrastructure
 
     public void Enter()
     {
-      RegisterServices();      
+      RegisterServices();
       _sceneLoader.Load(Initial, onLoaded: EnterLoadLevel);   
     }
 
     private void EnterLoadLevel()
     {
-      _stateMachine.Enter<LoadLevelState>();
+      _stateMachine.Enter<LoadLevelState, string>("Main");
     }
 
     private void RegisterServices()
