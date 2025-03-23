@@ -23,7 +23,7 @@ namespace Infrastructure
 
     private void EnterLoadLevel()
     {
-      _stateMachine.Enter<LoadLevelState, string>("Main");
+      _stateMachine.Enter<LoadingLevelState, string>("Main");
     }
 
     private void RegisterServices()

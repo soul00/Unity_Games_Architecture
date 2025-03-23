@@ -4,6 +4,7 @@
 TagManager:
   serializedVersion: 3
   tags:
+  - LoadingCurtain
   - InitialPoint
   layers:
   - Default

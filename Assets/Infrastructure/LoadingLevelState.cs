@@ -1,36 +1,45 @@
 ﻿using CameraScripts;
+using Loading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Infrastructure
 {
-  public class LoadLevelState : IPayloadedState<string>
+  public class LoadingLevelState : IPayloadedState<string>
   {
     private const string InitialPointTag = "InitialPoint";
+    private const string PlayerPath = "Player/Player";
+    private const string HudPath = "HUD/HUD";
     private readonly GameStateMachine _stateMachine;
     private readonly SceneLoader _sceneLoader;
+    private readonly LoadingCurtain _loadingCurtain;
 
-    public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader)
+    public LoadingLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain loadingCurtain)
     {
       _stateMachine = stateMachine;
       _sceneLoader = sceneLoader;
+      this._loadingCurtain = loadingCurtain;
     }
 
-    public void Enter(string sceneName) =>
-      _sceneLoader.Load(sceneName, OnLoaded);
-
-    public void Exit()
+    public void Enter(string sceneName)
     {
+      _loadingCurtain.Show();
+      _sceneLoader.Load(sceneName, OnLoaded);
     }
+
+    public void Exit() => 
+      _loadingCurtain.Hide();
 
     private void OnLoaded()
     {
       GameObject initialPoint = GameObject.FindWithTag(InitialPointTag);
       
-      GameObject hero = Instantiate("Player/Player", initialPoint.transform.position);
-      Instantiate("HUD/HUD");
+      GameObject hero = Instantiate(PlayerPath, initialPoint.transform.position);
+      Instantiate(HudPath);
       
       CameraFollow(hero);
+      
+      _stateMachine.Enter<GameLoopState>();
     }
 
     private void CameraFollow(GameObject hero)
