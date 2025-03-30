@@ -1,4 +1,5 @@
 using Infrastructure;
+using Infrastructure.Services;
 using Services.Input;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace Player
     
     private void Awake()
     {
-      _inputService = Game.inputService;
+      _inputService = AllServices.Container.Single<IInputService>();
     }
 
     private void Update()
