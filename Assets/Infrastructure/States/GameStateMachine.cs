@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Infrastructure.Factory;
 using Infrastructure.Services;
+using Infrastructure.Services.PersistentProgress;
+using Infrastructure.Services.SaveLoad;
 using Loading;
 
 namespace Infrastructure.States
@@ -17,6 +19,7 @@ namespace Infrastructure.States
       {
         [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
         [typeof(LoadingLevelState)] = new LoadingLevelState(this, sceneLoader, loadingCurtain, services.Single<IGameFactory>()),
+        [typeof(LoadingProgressState)] = new LoadingProgressState(this, services.Single<IPersistentProgressService>(), services.Single<ISaveLoadService>()),
         [typeof(GameLoopState)] = new GameLoopState(this),
       };
     }

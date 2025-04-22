@@ -26,6 +26,7 @@ namespace Infrastructure.States
     public void Enter(string sceneName)
     {
       _loadingCurtain.Show();
+      _gameFactory.Cleanup();
       _sceneLoader.Load(sceneName, OnLoaded);
     }
 

@@ -1,17 +1,19 @@
-using Infrastructure;
+using Infrastructure.Data;
 using Infrastructure.Services;
+using Infrastructure.Services.PersistentProgress;
 using Services.Input;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Player
 {
-  public class PlayerMove : MonoBehaviour
+  public class PlayerMove : MonoBehaviour, ISavedProgress
   {
-    public CharacterController CharacterController;
-    public float MovementSpeed;
+    [SerializeField] private CharacterController _characterController;
+    [SerializeField] private float MovementSpeed;
 
     private IInputService _inputService;
-    
+
     private void Awake()
     {
       _inputService = AllServices.Container.Single<IInputService>();
@@ -32,8 +34,36 @@ namespace Player
         transform.forward = movementVector;
       }
       movementVector += Physics.gravity;
-      
-      CharacterController.Move(MovementSpeed * movementVector * Time.deltaTime);
+
+      _characterController.Move(MovementSpeed * movementVector * Time.deltaTime);
     }
+
+    public void UpdateProgress(PlayerProgress progress)
+    {
+      progress.WorldData.PositionOnLevel = new PositionOnLevel(CurrentLevel(), transform.position.AsVectorData());
+    }
+
+
+    public void LoadProgress(PlayerProgress progress)
+    {
+      if(CurrentLevel() == progress.WorldData.PositionOnLevel.Level)
+      {
+        Vector3Data savedPosition = progress.WorldData.PositionOnLevel.Position;
+        if (savedPosition != null)
+        {
+          Warp(to: savedPosition);
+        }
+      }
+    }
+
+    private void Warp(Vector3Data to)
+    {
+      _characterController.enabled = false;
+      transform.position = to.AsUnityVector();
+      _characterController.enabled = true;
+    }
+
+    private static string CurrentLevel() =>
+      SceneManager.GetActiveScene().name;
   }
 }

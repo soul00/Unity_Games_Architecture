@@ -149,5 +149,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f63a82e2dccfb3642b3452944bf9fef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterController: {fileID: 3698963793826833922}
+  _characterController: {fileID: 3698963793826833922}
   MovementSpeed: 5
