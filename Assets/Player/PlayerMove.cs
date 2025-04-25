@@ -25,16 +25,16 @@ namespace Player
 
       if (_inputService?.Axis.sqrMagnitude > Constants.Epsilon)
       {
-        if (Camera.main != null) 
+        if (Camera.main != null)
+        {
           movementVector = Camera.main.transform.TransformDirection(_inputService.Axis);
+        }
         
         movementVector.y = 0;
         movementVector.Normalize();
-
         transform.forward = movementVector;
       }
       movementVector += Physics.gravity;
-
       _characterController.Move(MovementSpeed * movementVector * Time.deltaTime);
     }
 
@@ -42,7 +42,6 @@ namespace Player
     {
       progress.WorldData.PositionOnLevel = new PositionOnLevel(CurrentLevel(), transform.position.AsVectorData());
     }
-
 
     public void LoadProgress(PlayerProgress progress)
     {
@@ -59,7 +58,7 @@ namespace Player
     private void Warp(Vector3Data to)
     {
       _characterController.enabled = false;
-      transform.position = to.AsUnityVector();
+      transform.position = to.AsUnityVector().AddY(_characterController.height);
       _characterController.enabled = true;
     }
 

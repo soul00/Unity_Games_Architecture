@@ -44,8 +44,8 @@ namespace Infrastructure.States
       _services.RegisterSingle<IInputService>(InputService());
       _services.RegisterSingle<IAssets>(new AssetProvider());
       _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
-      _services.RegisterSingle<ISaveLoadService>(new SaveLoadService());
       _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssets>()));
+      _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentProgressService>(),_services.Single<IGameFactory>()));
     }
 
     private static IInputService InputService()
