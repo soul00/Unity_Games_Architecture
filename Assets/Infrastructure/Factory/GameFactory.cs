@@ -11,6 +11,9 @@ namespace Infrastructure.Factory
     public List<ISavedProgressReader> ProgressReaders { get; } = new List<ISavedProgressReader>();
     public List<ISavedProgress> ProgressWriters { get; } = new List<ISavedProgress>();
 
+    public GameObject HeroGameObject { get; set; }
+    public event Action HeroCreated;
+
     private readonly IAssets _assets;
 
     public GameFactory(IAssets assets)
@@ -18,8 +21,13 @@ namespace Infrastructure.Factory
       _assets = assets;
     }
 
-    public GameObject CreateHero(GameObject at) =>
-      InstantiateRegistered(AssetPaths.PlayerPath, at.transform.position);
+    public GameObject CreateHero(GameObject at)
+    {
+      GameObject hero = InstantiateRegistered(AssetPaths.PlayerPath, at.transform.position);
+      HeroGameObject = hero;
+      HeroCreated?.Invoke();
+      return hero;
+    }
 
     public void CreateHud() =>
       InstantiateRegistered(AssetPaths.HudPath);

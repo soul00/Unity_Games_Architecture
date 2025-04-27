@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Services;
 using Infrastructure.Services.PersistentProgress;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,9 @@ namespace Infrastructure.Factory
   {
     List<ISavedProgressReader> ProgressReaders { get; }
     List<ISavedProgress> ProgressWriters { get; }
+    GameObject HeroGameObject { get; }
+
+    event Action HeroCreated;
 
     GameObject CreateHero(GameObject at);
     void Cleanup();
