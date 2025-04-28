@@ -6,11 +6,12 @@ TagManager:
   tags:
   - LoadingCurtain
   - InitialPoint
+  - PlayerEyes
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Walkable
   - Water
   - UI
   - 
