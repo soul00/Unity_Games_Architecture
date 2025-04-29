@@ -1,4 +1,5 @@
 ﻿using Infrastructure.AssetManagement;
+using Infrastructure.Data;
 using Infrastructure.Services.PersistentProgress;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace Infrastructure.Factory
 
     public GameObject CreateHero(GameObject at)
     {
-      GameObject hero = InstantiateRegistered(AssetPaths.PlayerPath, at.transform.position);
+      GameObject hero = InstantiateRegistered(AssetPaths.PlayerPath, at.transform.position.AddY(1));
       HeroGameObject = hero;
       HeroCreated?.Invoke();
       return hero;
